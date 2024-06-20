@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Flex, Group, Text, rem, Image, Button, ScrollArea } from "@mantine/core";
+import { Flex, Group, Text, rem, Image, Button, ScrollArea, Highlight } from "@mantine/core";
 import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
 import { Dropzone } from "@mantine/dropzone";
 import { uploadFile } from "../../api/upload";
@@ -158,7 +158,13 @@ export default function Uploadcv(props) {
                 {questionsAndAnswers.map((qa, index) => (
                   <li key={index} style={{ marginBottom: "1rem" }}>
                     <Text size="lg" weight={500} style={{ whiteSpace: "pre-line" }}>{qa.question}</Text>
-                    <Text style={{ whiteSpace: "pre-line", marginTop: "0.5rem" }}>{qa.answer}</Text>
+                    <div style={{ whiteSpace: "pre-line", marginTop: "0.5rem" }}>
+                      <span style={{ fontWeight: 'bold', textDecoration: 'underline' }}>Answer:</span>
+                      <span> </span>
+                      <Highlight style={{ display: 'inline' }} highlight={qa.answer}>
+                        {qa.answer}
+                      </Highlight>
+                    </div>
                   </li>
                 ))}
               </ul>
