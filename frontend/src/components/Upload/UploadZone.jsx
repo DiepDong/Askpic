@@ -28,11 +28,11 @@ export default function Uploadcv(props) {
       console.log("No file to upload.");
       return;
     }
-
+  
     setLoading(true); // Set loading to true when starting to generate questions
-
+  
     const file = acceptedFiles[0]; // Assume only one file is dropped
-
+  
     const id = notifications.show({
       loading: true,
       title: 'Generating Answers from Questions',
@@ -40,14 +40,14 @@ export default function Uploadcv(props) {
       autoClose: false,
       withCloseButton: false,
     });
-
+  
     try {
       const response = await uploadFile(file);
       console.log("API Response:", response); // Log the response
-
+  
       if (response && response.data && response.data.length > 0) {
         setQuestionsAndAnswers(response.data); // Update state with API response
-
+  
         notifications.update({
           id,
           color: 'teal',
@@ -57,18 +57,38 @@ export default function Uploadcv(props) {
           loading: false,
           autoClose: 5000,
         });
-
       } else {
         console.log("No questions and answers returned from API.");
         setQuestionsAndAnswers([]);
+  
+        notifications.update({
+          id,
+          color: 'red',
+          title: 'Error',
+          message: 'Invalid response from API. No questions and answers returned.',
+          icon: <IconX style={{ width: rem(18), height: rem(18) }} />,
+          loading: false,
+          autoClose: 5000,
+        });
       }
     } catch (error) {
       console.error("Error uploading file:", error);
       setQuestionsAndAnswers([]);
+  
+      notifications.update({
+        id,
+        color: 'red',
+        title: 'Error',
+        message: 'An error occurred while uploading the file. Please try again.',
+        icon: <IconX style={{ width: rem(18), height: rem(18) }} />,
+        loading: false,
+        autoClose: 5000,
+      });
     } finally {
       setLoading(false); // Set loading to false after generating questions (success or failure)
     }
   };
+  
 
   return (
     <>

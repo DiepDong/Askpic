@@ -18,7 +18,7 @@ class Services():
             You will be passed a page extracted from the documentation. 
             Write all the questions with their four multiple-choice answers (A, B, C, D) exactly as they appear in the text. 
             For questions involving underlined words or letters, replace them with double underscores (__word__).
-            Number each question sequentially starting from the number it appears in the image.""", 
+            Number each question sequentially as they appear in the image, maintaining the original numbering.""", 
             uploaded_file
         ])
 
