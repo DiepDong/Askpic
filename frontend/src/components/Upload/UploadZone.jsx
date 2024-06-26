@@ -28,11 +28,11 @@ export default function Uploadcv(props) {
       console.log("No file to upload.");
       return;
     }
-  
+
     setLoading(true); // Set loading to true when starting to generate questions
-  
+
     const file = acceptedFiles[0]; // Assume only one file is dropped
-  
+
     const id = notifications.show({
       loading: true,
       title: 'Generating Answers from Questions',
@@ -40,14 +40,14 @@ export default function Uploadcv(props) {
       autoClose: false,
       withCloseButton: false,
     });
-  
+
     try {
       const response = await uploadFile(file);
       console.log("API Response:", response); // Log the response
-  
+
       if (response && response.data && response.data.length > 0) {
         setQuestionsAndAnswers(response.data); // Update state with API response
-  
+
         notifications.update({
           id,
           color: 'teal',
@@ -60,7 +60,7 @@ export default function Uploadcv(props) {
       } else {
         console.log("No questions and answers returned from API.");
         setQuestionsAndAnswers([]);
-  
+
         notifications.update({
           id,
           color: 'red',
@@ -74,7 +74,7 @@ export default function Uploadcv(props) {
     } catch (error) {
       console.error("Error uploading file:", error);
       setQuestionsAndAnswers([]);
-  
+
       notifications.update({
         id,
         color: 'red',
@@ -88,7 +88,7 @@ export default function Uploadcv(props) {
       setLoading(false); // Set loading to false after generating questions (success or failure)
     }
   };
-  
+
 
   return (
     <>
@@ -184,6 +184,10 @@ export default function Uploadcv(props) {
                       <Highlight style={{ display: 'inline' }} highlight={qa.answer}>
                         {qa.answer}
                       </Highlight>
+                    </div>
+                    <div style={{ whiteSpace: "pre-line", marginTop: "0.5rem" }}>
+                      <span style={{ fontWeight: 'bold', textDecoration: 'underline' }}>Explanation:</span>
+                      <span> </span>
                       <Text style={{ display: 'inline' }}>{qa.explanation}</Text>
                     </div>
                   </li>
