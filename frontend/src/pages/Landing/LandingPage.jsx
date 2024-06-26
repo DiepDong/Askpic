@@ -1,4 +1,3 @@
-
 import { Flex, Title, Text, Container, Box, Divider, Grid, Button, ActionIcon } from "@mantine/core";
 import style from "./style.module.css";
 import logo from "../../assets/logo513.png";
@@ -10,6 +9,7 @@ import About from "../../assets/About.png";
 import UpArrow from "../../assets/up-arrow.png";
 import { IconArrowBigRight, IconBrandReddit, IconBrandTwitter, IconMessage, IconBrandTelegram, IconBrandGithub, IconArrowUp } from '@tabler/icons-react';
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const socials = [
   { icon: IconBrandReddit },
@@ -21,11 +21,10 @@ const socials = [
 const supportItems = ['Help Center', 'FAQ', 'Bug report', 'Contact Us'];
 const names = ['Askpic', 'Forum', 'Documentation'];
 
-
 export default function LandingPage() {
   const [sticky, setSticky] = useState(false);
   const [showButton, setShowButton] = useState(false); // state mới để kiểm soát việc hiển thị nút up-arrow
-
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,6 +55,7 @@ export default function LandingPage() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   const scrollToTop = () => { // hàm xử lý sự kiện click vào nút up-arrow
     window.scrollTo({
       top: 0,
@@ -63,7 +63,9 @@ export default function LandingPage() {
     });
   };
 
-
+  const handleGetStartedClick = () => {
+    navigate('/dashboard');
+  };
 
   return (
     <>
@@ -93,7 +95,7 @@ export default function LandingPage() {
         <div className={style.heroContent}>
           <h1>Unlock Your Academic Success</h1>
           <p>Take the Next Step Towards Excelling in Your Studies Today!</p>
-          <button className={style.btn}>
+          <button className={style.btn} onClick={handleGetStartedClick}>
             Get Started
             <img src={darkarrow} alt="arrow" />
           </button>

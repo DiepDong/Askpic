@@ -184,6 +184,7 @@ export default function Uploadcv(props) {
                       <Highlight style={{ display: 'inline' }} highlight={qa.answer}>
                         {qa.answer}
                       </Highlight>
+                      <Text style={{ display: 'inline' }}>{qa.explanation}</Text>
                     </div>
                   </li>
                 ))}
