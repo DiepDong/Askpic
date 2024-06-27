@@ -89,6 +89,10 @@ export default function Uploadcv(props) {
     }
   };
 
+  const handleCancel = () => {
+    setAcceptedFiles([]);
+    setQuestionsAndAnswers([]);
+  };
 
   return (
     <>
@@ -202,7 +206,7 @@ export default function Uploadcv(props) {
 
       {/* Overlay Footer */}
       <Group style={{ position: "fixed", inset: "auto 40px 40px auto", bottom: "30px", right: "40px" }}>
-        <Button variant="default" size="md" radius="xl" onClick={() => setAcceptedFiles([])}>Cancel</Button>
+        <Button variant="default" size="md" radius="xl" onClick={handleCancel}>Cancel</Button>
         <Button
           variant="filled"
           size="md"
@@ -216,3 +220,4 @@ export default function Uploadcv(props) {
     </>
   );
 }
+  
