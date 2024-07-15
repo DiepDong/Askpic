@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import { Flex, Group, Text, rem, Image, Button, ScrollArea, Highlight } from "@mantine/core";
-import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
+import { IconUpload, IconPhoto, IconX, IconCheck } from "@tabler/icons-react";
 import { Dropzone } from "@mantine/dropzone";
 import { uploadFile } from "../../api/upload";
 import { notifications } from '@mantine/notifications';
-import { IconCheck } from '@tabler/icons-react';
 
 export default function Uploadcv(props) {
   const [acceptedFiles, setAcceptedFiles] = useState([]);
   const [questionsAndAnswers, setQuestionsAndAnswers] = useState([]);
-  const [loading, setLoading] = useState(false); // State to manage loading state
+  const [loading, setLoading] = useState(false);
 
   const handleDrop = (files) => {
     setAcceptedFiles(files);
-    setQuestionsAndAnswers([]); // Reset questions and answers on new drop
+    setQuestionsAndAnswers([]);
     console.log("accepted files", files);
   };
 
@@ -29,9 +28,9 @@ export default function Uploadcv(props) {
       return;
     }
 
-    setLoading(true); // Set loading to true when starting to generate questions
+    setLoading(true);
 
-    const file = acceptedFiles[0]; // Assume only one file is dropped
+    const file = acceptedFiles[0];
 
     const id = notifications.show({
       loading: true,
@@ -43,10 +42,12 @@ export default function Uploadcv(props) {
 
     try {
       const response = await uploadFile(file);
-      console.log("API Response:", response); // Log the response
+      console.log("API Response:", response);
 
       if (response && response.data && response.data.length > 0) {
-        setQuestionsAndAnswers(response.data); // Update state with API response
+        // Extract the questions and answers from the nested structure
+        const sectionContent = response.data[0]['section content'];
+        setQuestionsAndAnswers(sectionContent);
 
         notifications.update({
           id,
@@ -85,7 +86,7 @@ export default function Uploadcv(props) {
         autoClose: 5000,
       });
     } finally {
-      setLoading(false); // Set loading to false after generating questions (success or failure)
+      setLoading(false);
     }
   };
 
@@ -220,4 +221,3 @@ export default function Uploadcv(props) {
     </>
   );
 }
-  
